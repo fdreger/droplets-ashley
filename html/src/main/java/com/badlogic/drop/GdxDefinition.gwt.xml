@@ -5,6 +5,7 @@
   <inherits name="com.badlogic.gdx.backends.gdx_backends_gwt" />
   <inherits name="com.badlogic.drop.Main" />
   <inherits name="net.snowyhollows.bento.gdx" />
+    <inherits name='com.badlogic.ashley_gwt' />
   <entry-point class="com.badlogic.drop.gwt.GwtLauncher" />
   <set-configuration-property name="gdx.assetpath" value="../assets" />
   <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>

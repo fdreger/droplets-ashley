@@ -51,7 +51,7 @@ public class Main extends ApplicationAdapter {
         camera.setToOrtho(false, 800, 480);
         batch = new SpriteBatch();
 
-        engine.addSystem(new ControlledSystem(camera));
+        engine.addSystem(new ControlledSystem(new Controller(camera)));
         engine.addSystem(new SpawningSystem(assetManager));
         engine.addSystem(new GeneralMovementSystem());
         engine.addSystem(new Renderer(batch));
