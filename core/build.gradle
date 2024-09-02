@@ -4,6 +4,7 @@ eclipse.project.name = appName + '-core'
 dependencies {
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
   api "net.snowyhollows.bento:bento-gdx:$bentoVersion"
+  api "com.kotcrab.vis:vis-ui:$visuiVersion"
   implementation "com.badlogicgames.ashley:ashley:1.7.4"
   annotationProcessor "net.snowyhollows.bento:bento-generator:1.7.0"
 }

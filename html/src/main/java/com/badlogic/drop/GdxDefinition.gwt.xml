@@ -7,6 +7,7 @@
   <inherits name="net.snowyhollows.bento.gdx" />
     <inherits name='com.badlogic.ashley_gwt' />
   <entry-point class="com.badlogic.drop.gwt.GwtLauncher" />
+    <inherits name='com.kotcrab.vis.vis-ui' />
   <set-configuration-property name="gdx.assetpath" value="../assets" />
   <set-configuration-property name="xsiframe.failIfScriptTag" value="FALSE"/>
   <!-- These two lines reduce the work GWT has to do during compilation and also shrink output size. -->

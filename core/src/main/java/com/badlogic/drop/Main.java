@@ -9,26 +9,26 @@ import com.badlogic.drop.system.Renderer;
 import com.badlogic.drop.system.SpawningSystem;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.TimeUtils;
-import net.snowyhollows.bento.annotation.WithFactory;
+import net.snowyhollows.solness.SnEditor;
+import net.snowyhollows.solness.ashley.AshleyScene;
+import net.snowyhollows.solness.ashley.SolnessAshleyGame;
+import net.snowyhollows.solness.spi.SnScene;
 
-import java.util.Iterator;
+import java.util.List;
 
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Engine engine;
     private AssetManager assetManager;
+    private SnEditor solness;
+    private boolean prepared;
+    private SolnessAshleyGame snGame;
 
     public Main() {
     }
@@ -38,11 +38,15 @@ public class Main extends ApplicationAdapter {
         assetManager = new AssetManager();
         assetManager.load("bucket.png", Texture.class);
         assetManager.load("droplet.png", Texture.class);
-        assetManager.finishLoading();
 
         engine = new Engine();
         // load the images for the droplet and the bucket, 64x64 pixels each
 
+
+
+    }
+
+    private void prepare() {
         engine.addEntity(createSpawnerEntity());
         engine.addEntity(createBucketEntity());
 
@@ -55,6 +59,19 @@ public class Main extends ApplicationAdapter {
         engine.addSystem(new SpawningSystem(assetManager));
         engine.addSystem(new GeneralMovementSystem());
         engine.addSystem(new Renderer(batch));
+
+        snGame = new SolnessAshleyGame(Bounded.class, Collectible.class, Controlled.class, RenderedAsTexture.class, SpawningDroplets.class);
+
+        SnScene<Engine, Entity> scene = snGame.create("start", engine, assetManager);
+        scene.load();
+
+        List<Entity> result = scene.getEntities();
+        scene.getComponents()
+        for (Entity entity : result) {
+            scene.getComponents();
+        }
+
+        prepared = true;
     }
 
     private Entity createSpawnerEntity() {
@@ -86,13 +103,24 @@ public class Main extends ApplicationAdapter {
     public void render() {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
+        if (!assetManager.isFinished()) {
+            assetManager.update();
+            return;
+        }
+
+        if (!prepared) {
+            prepare();
+        }
+
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         engine.update(Gdx.graphics.getDeltaTime());
+        solness.act();
     }
 
     @Override
     public void dispose() {
         assetManager.dispose();
+//        solness.dispose();
     }
 }
