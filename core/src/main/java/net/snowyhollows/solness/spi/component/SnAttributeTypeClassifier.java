@@ -1,6 +1,6 @@
-package net.snowyhollows.solness.spi;
+package net.snowyhollows.solness.spi.component;
 
-public enum TypeClassifier {
+public enum SnAttributeTypeClassifier {
     GENERIC,
     BOOLEAN,
     FLOAT,

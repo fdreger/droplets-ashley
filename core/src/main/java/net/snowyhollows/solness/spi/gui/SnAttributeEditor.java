@@ -1,4 +1,4 @@
-package net.snowyhollows.solness.spi;
+package net.snowyhollows.solness.spi.gui;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 

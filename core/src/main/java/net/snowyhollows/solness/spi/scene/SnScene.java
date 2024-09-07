@@ -1,19 +1,20 @@
-package net.snowyhollows.solness.spi;
+package net.snowyhollows.solness.spi.scene;
+
+import net.snowyhollows.solness.spi.component.SnComponentType;
 
 import java.util.List;
 
 public interface SnScene<EntityEngine, EntityHandle> {
     String getName();
-
-    void readFromEngine();
-    void writeToEngine();
     void save();
     void load();
 
     EntityEngine getEngine();
-    List<EntityHandle> getEntities();
+    SnNode<EntityHandle> getRootNode();
 
     EntityHandle addEntity();
-    List<SnComponentType> getComponents();
+    List<SnComponentType<EntityHandle>> getComponents();
     void removeEntity(EntityHandle entity);
+
+    void dispose();
 }

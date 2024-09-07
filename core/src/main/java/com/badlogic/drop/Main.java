@@ -14,23 +14,27 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import net.snowyhollows.solness.SnEditor;
-import net.snowyhollows.solness.ashley.AshleyScene;
-import net.snowyhollows.solness.ashley.SolnessAshleyGame;
-import net.snowyhollows.solness.spi.SnScene;
+import net.snowyhollows.solness.spi.SolnessGui;
+import net.snowyhollows.solness.ashley.SolnessAshleyWorld;
+import net.snowyhollows.solness.spi.component.SnAttribute;
+import net.snowyhollows.solness.spi.component.SnComponentType;
+import net.snowyhollows.solness.spi.exception.SnNotFoundException;
+import net.snowyhollows.solness.spi.scene.SnNode;
+import net.snowyhollows.solness.spi.scene.SnScene;
 
-import java.util.List;
+import java.util.stream.Collectors;
 
 public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private OrthographicCamera camera;
     private Engine engine;
     private AssetManager assetManager;
-    private SnEditor solness;
+    private SolnessGui solness;
     private boolean prepared;
-    private SolnessAshleyGame snGame;
+    private SolnessAshleyWorld snGame;
 
     public Main() {
+
     }
 
     @Override
@@ -41,7 +45,6 @@ public class Main extends ApplicationAdapter {
 
         engine = new Engine();
         // load the images for the droplet and the bucket, 64x64 pixels each
-
 
 
     }
@@ -60,17 +63,9 @@ public class Main extends ApplicationAdapter {
         engine.addSystem(new GeneralMovementSystem());
         engine.addSystem(new Renderer(batch));
 
-        snGame = new SolnessAshleyGame(Bounded.class, Collectible.class, Controlled.class, RenderedAsTexture.class, SpawningDroplets.class);
+        snGame = new SolnessAshleyWorld();
 
-        SnScene<Engine, Entity> scene = snGame.create("start", engine, assetManager);
-        scene.load();
-
-        List<Entity> result = scene.getEntities();
-        scene.getComponents()
-        for (Entity entity : result) {
-            scene.getComponents();
-        }
-
+        solness = new SolnessGui(snGame.create("xcxca", engine, assetManager));
         prepared = true;
     }
 
@@ -123,4 +118,6 @@ public class Main extends ApplicationAdapter {
         assetManager.dispose();
 //        solness.dispose();
     }
+
+
 }

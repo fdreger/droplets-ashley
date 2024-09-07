@@ -7,4 +7,6 @@ dependencies {
   api "com.kotcrab.vis:vis-ui:$visuiVersion"
   implementation "com.badlogicgames.ashley:ashley:1.7.4"
   annotationProcessor "net.snowyhollows.bento:bento-generator:1.7.0"
+  // https://mvnrepository.com/artifact/org.jsoup/jsoup
+  implementation group: 'org.jsoup', name: 'jsoup', version: '1.18.1'
 }

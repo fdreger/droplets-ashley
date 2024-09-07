@@ -6,10 +6,10 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import net.snowyhollows.solness.ConversionUtils;
-import net.snowyhollows.solness.spi.SnAttribute;
-import net.snowyhollows.solness.spi.SnAttributeType;
-import net.snowyhollows.solness.spi.SnComponentType;
+import net.snowyhollows.solness.spi.util.SnConversions;
+import net.snowyhollows.solness.spi.component.SnAttribute;
+import net.snowyhollows.solness.spi.component.SnAttributeType;
+import net.snowyhollows.solness.spi.component.SnComponentType;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -27,11 +27,16 @@ public class AshleyComponent implements SnComponentType<Entity> {
         this.name = name;
         this.clazz = clazz;
         this.componentMapper = componentMapper;
-        Field[] declaredFields = ClassReflection.getFields(clazz);
-        ashleyAttributes = Arrays.stream(declaredFields).map(f -> new AshleyAttribute(componentMapper, new SnAttributeType(ConversionUtils.getTypeClassifier(f.getType())), f.getName(), f)).collect(Collectors.toList());
+        Field[] declaredFields = ClassReflection.getDeclaredFields(clazz);
+        ashleyAttributes = Arrays.stream(declaredFields).map(f -> new AshleyAttribute(componentMapper, new SnAttributeType(SnConversions.getTypeClassifier(f.getType())), f.getName(), f)).collect(Collectors.toList());
         immutableAttributes = Collections.unmodifiableList(ashleyAttributes);
     }
 
+
+    @Override
+    public String getName() {
+        return name;
+    }
 
     @Override
     public void add(Entity entity) {

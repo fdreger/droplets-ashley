@@ -1,6 +1,6 @@
-package net.snowyhollows.solness;
+package net.snowyhollows.solness.spi.component;
 
-public enum AttributeRole {
+public enum SnAttributeRole {
     TRANSFORM_X,
     TRANSFORM_Y,
     WIDTH,

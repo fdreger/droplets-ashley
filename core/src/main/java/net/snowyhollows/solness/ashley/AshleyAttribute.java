@@ -1,13 +1,12 @@
 package net.snowyhollows.solness.ashley;
 
 import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import net.snowyhollows.solness.ConversionUtils;
-import net.snowyhollows.solness.spi.SnAttribute;
-import net.snowyhollows.solness.spi.SnAttributeType;
+import net.snowyhollows.solness.spi.util.SnConversions;
+import net.snowyhollows.solness.spi.component.SnAttribute;
+import net.snowyhollows.solness.spi.component.SnAttributeType;
 
 
 public class AshleyAttribute implements SnAttribute<Entity> {
@@ -21,6 +20,7 @@ public class AshleyAttribute implements SnAttribute<Entity> {
         this.type = type;
         this.name = name;
         this.field = field;
+        field.setAccessible(true);
     }
 
     @Override
@@ -46,7 +46,8 @@ public class AshleyAttribute implements SnAttribute<Entity> {
     private static void setString(Entity entity, String value, ComponentMapper<?> mapper, Field field) {
         Object component = mapper.get(entity);
         try {
-            field.set(component, ConversionUtils.stringToObject(field.getType(), value));ConversionUtils.objectToString(field.get(component));
+            field.set(component, SnConversions.stringToObject(field.getType(), value));
+            SnConversions.objectToString(field.get(component));
         } catch (ReflectionException e) {
             throw new RuntimeException(e);
         }
@@ -55,7 +56,7 @@ public class AshleyAttribute implements SnAttribute<Entity> {
     private static String getString(Entity entity, ComponentMapper<?> mapper, Field field) {
         Object component = mapper.get(entity);
         try {
-            return ConversionUtils.objectToString(field.get(component));
+            return SnConversions.objectToString(field.get(component));
         } catch (ReflectionException e) {
             throw new RuntimeException(e);
         }
